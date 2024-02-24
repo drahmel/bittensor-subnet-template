@@ -40,24 +40,31 @@ def get_random_uids(
     """
     candidate_uids = []
     avail_uids = []
-
+    print("\n\n", "AVAILABLE UIDs", self.metagraph.n.item())
     for uid in range(self.metagraph.n.item()):
+        print("UID", uid)
+
         uid_is_available = check_uid_availability(
             self.metagraph, uid, self.config.neuron.vpermit_tao_limit
         )
         uid_is_not_excluded = exclude is None or uid not in exclude
 
         if uid_is_available:
+            print("UID available", uid)
             avail_uids.append(uid)
             if uid_is_not_excluded:
                 candidate_uids.append(uid)
+        else:
+            print("UID UNavailable", uid)
 
     # Check if candidate_uids contain enough for querying, if not grab all avaliable uids
     available_uids = candidate_uids
-    if len(candidate_uids) < k:
+    print("TOTAL AVAILABLE UIDs", available_uids, k)
+    if False and len(candidate_uids) < k:
         available_uids += random.sample(
             [uid for uid in avail_uids if uid not in candidate_uids],
             k - len(candidate_uids),
         )
-    uids = torch.tensor(random.sample(available_uids, k))
+    #uids = torch.tensor(random.sample(available_uids, k))
+    uids = torch.tensor(random.sample(available_uids, 2))
     return uids

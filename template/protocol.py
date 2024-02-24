@@ -53,9 +53,11 @@ class Dummy(bt.Synapse):
 
     # Required request input, filled by sending dendrite caller.
     dummy_input: int
+    question_input: typing.Optional[str]
 
     # Optional request output, filled by recieving axon.
     dummy_output: typing.Optional[int] = None
+    answer_output: typing.Optional[str] = None
 
     def deserialize(self) -> int:
         """

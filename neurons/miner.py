@@ -20,6 +20,7 @@
 import time
 import typing
 import bittensor as bt
+import requests
 
 # Bittensor Miner Template:
 import template
@@ -39,7 +40,7 @@ class Miner(BaseMinerNeuron):
 
     def __init__(self, config=None):
         super(Miner, self).__init__(config=config)
-
+        bt.logging.info("------> Starting Afterparty Jaden TextGen Miner v1.0", time.time())
         # TODO(developer): Anything specific to your use case you can do here
 
     async def forward(
@@ -60,6 +61,16 @@ class Miner(BaseMinerNeuron):
         """
         # TODO(developer): Replace with actual implementation logic.
         synapse.dummy_output = synapse.dummy_input * 2
+
+        url = "http://dan.soindrop.com/chorus/api/v1/bittensor_miner?q=What%20is%20your%20favorite%20color"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            print("answer", data['data']['a'])
+            synapse.answer_output = data['data']['a']
+        sleepTime = 10
+        time.sleep(sleepTime)
+        print("Sleeping %d" % sleepTime, synapse)
         return synapse
 
     async def blacklist(
@@ -102,7 +113,7 @@ class Miner(BaseMinerNeuron):
                 f"Blacklisting un-registered hotkey {synapse.dendrite.hotkey}"
             )
             return True, "Unrecognized hotkey"
-        
+
         if self.config.blacklist.force_validator_permit:
             # If the config is set to force validator permit, then we should only allow requests from validators.
             if not self.metagraph.validator_permit[uid]:
@@ -111,7 +122,7 @@ class Miner(BaseMinerNeuron):
                 )
                 return True, "Non-validator hotkey"
 
-            
+
 
         bt.logging.trace(
             f"Not Blacklisting recognized hotkey {synapse.dendrite.hotkey}"

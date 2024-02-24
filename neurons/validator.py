@@ -43,7 +43,7 @@ class Validator(BaseValidatorNeuron):
     def __init__(self, config=None):
         super(Validator, self).__init__(config=config)
 
-        bt.logging.info("load_state()")
+        bt.logging.info("------> Starting Afterparty Jaden TextGen VALIDATOR v1.0", time.time())
         self.load_state()
 
         # TODO(developer): Anything specific to your use case you can do here
