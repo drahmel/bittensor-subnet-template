@@ -62,7 +62,7 @@ class Miner(BaseMinerNeuron):
         # TODO(developer): Replace with actual implementation logic.
         synapse.dummy_output = synapse.dummy_input * 2
 
-        url = "http://dan.soindrop.com/chorus/api/v1/bittensor_miner?q=What%20is%20your%20favorite%20color"
+        url = "http://dan.soindrop.com/chorus/api/v1/bittensor_miner?q="+synapse.question_input
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()

@@ -58,6 +58,7 @@ class Validator(BaseValidatorNeuron):
         - Updating the scores
         """
         # TODO(developer): Rewrite this function based on your protocol definition.
+        print("STARTING FORWARD")
         return await forward(self)
 
 
